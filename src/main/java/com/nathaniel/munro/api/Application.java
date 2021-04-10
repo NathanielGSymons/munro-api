@@ -2,12 +2,14 @@ package com.nathaniel.munro.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
-public class MunroApiApplication {
+@EnableConfigurationProperties({MunroProperties.class})
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MunroApiApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
