@@ -1,6 +1,7 @@
 package com.nathaniel.munro.api.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.springframework.context.annotation.Bean;
@@ -18,5 +19,10 @@ public class CsvConfig {
     @Bean
     public CsvSchema csvSchema() {
         return CsvSchema.emptySchema().withHeader();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 }
