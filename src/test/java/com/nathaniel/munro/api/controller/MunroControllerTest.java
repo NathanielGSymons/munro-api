@@ -42,13 +42,13 @@ class MunroControllerTest {
     void getMunros_returnsAllMunro() throws Exception {
         Munro munro = new Munro(
                 "name",
-                100,
+                100.0,
                 "hillCategory",
                 "gridReference"
         );
         List<Munro> munros = List.of(munro);
 
-        when(munroService.getMunros()).thenReturn(munros);
+        when(munroService.fetchMunros()).thenReturn(munros);
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/munros")

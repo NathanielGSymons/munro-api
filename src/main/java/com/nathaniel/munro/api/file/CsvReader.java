@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Component
 public class CsvReader {
@@ -19,12 +21,18 @@ public class CsvReader {
 
     private final List<Munro> munros;
 
-    public CsvReader(CsvMapper csvMapper, CsvSchema csvSchema, MunroProperties munroProperties) throws IOException {
+    public CsvReader(CsvMapper csvMapper,
+                     CsvSchema csvSchema,
+                     MunroProperties munroProperties) throws IOException {
         this.csvMapper = csvMapper;
         this.csvSchema = csvSchema;
         this.fileLocation = munroProperties.getFileLocation();
 
         munros = fetchMunroDataFromCsv();
+    }
+
+    public List<Munro> fetchMunroData() {
+        return munros;
     }
 
     private List<Munro> fetchMunroDataFromCsv() throws IOException {
@@ -33,10 +41,12 @@ public class CsvReader {
                 .with(csvSchema)
                 .readValues(new File(fileLocation));
 
-        return munros.readAll();
+        return munros.readAll().stream()
+                .filter(removeIncorrectlyGeneratedMunros())
+                .collect(Collectors.toList());
     }
 
-    public List<Munro> fetchMunroData() {
-        return munros;
+    private Predicate<Munro> removeIncorrectlyGeneratedMunros() {
+        return munro -> !munro.getName().equals("");
     }
 }

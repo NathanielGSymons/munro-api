@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api")
@@ -22,9 +24,17 @@ public class MunroController {
 
     @GetMapping(value = "/munros", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<List<Munro>> getMunros() {
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(munroService.getMunros());
+    public ResponseEntity<List<Munro>> getMunros(
+            @RequestParam(required = false) Map<String, String> parameters
+    ) {
+        if (parameters.isEmpty()) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(munroService.fetchMunros());
+        } else {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(munroService.fetchMunros(parameters));
+        }
     }
 }
