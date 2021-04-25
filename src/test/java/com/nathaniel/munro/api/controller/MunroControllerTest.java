@@ -61,4 +61,19 @@ class MunroControllerTest {
 
         assertThat(content).isEqualTo("[{\"Name\":\"name\",\"Height (m)\":100.0,\"Post 1997\":\"hillCategory\",\"Grid Ref\":\"gridReference\"}]");
     }
+
+    @Test
+    void getMunrosDoesNotExist_throwsNotFoundException() throws Exception {
+        when(munroService.fetchMunros()).thenThrow(new RuntimeException());
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                .get("/api/munros")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+        String errorMessage = mvcResult.getResponse().getErrorMessage();
+
+        assertThat(errorMessage).isEqualTo("Munros not found");
+    }
 }
