@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(
         classes = Application.class,
-        properties = {"munro.fileLocation=src/test/resources/data/inputMunroData.csv"})
+        properties = {"munro.fileLocation=src/test/resources/inputMunroData.csv"})
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class MunroIntegrationTest {
