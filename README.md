@@ -1,4 +1,4 @@
-# Munro API
+# Munro API (take home challenge)
 
 An API providing the finest Munro data. 
 
